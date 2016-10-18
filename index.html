@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous">
+
+    <style>
+        body {
+            background: #FFBC00;
+            color: white;
+        }
+
+        div.well {
+            height: 250px;
+        }
+
+        .Absolute-Center {
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        .Absolute-Center.is-Responsive {
+            width: 50%;
+            height: 50%;
+            min-width: 200px;
+            padding: 40px;
+        }
+
+        .spin {
+            -webkit-animation: spin .8s infinite linear;
+            -moz-animation: spin .8s infinite linear;
+            -o-animation: spin .8s infinite linear;
+            animation: spin .8s infinite linear;
+            -webkit-transform-origin: 50% 58%;
+            transform-origin:50% 58%;
+            -ms-transform-origin:50% 58%; /* IE 9 */
+        }
+
+        @-moz-keyframes spin {
+            from {
+                -moz-transform: rotate(0deg);
+            }
+            to {
+                -moz-transform: rotate(360deg);
+            }
+        }
+
+        @-webkit-keyframes spin {
+            from {
+                -webkit-transform: rotate(0deg);
+            }
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+    </style>
+</head>
+<body>
+<form class="Absolute-Center is-Responsive">
+    <div class='row' id="p_scents">
+        <div class='col-sm-4'>
+            <div class='form-group'>
+                <select class="form-control">
+                    <option>Наименование клиента</option>
+                    <option>IP-адрес оператора</option>
+                    <option>Удаленный IP-адрес</option>
+                    <option>Порт</option>
+                    <option>URL</option>
+                </select>
+            </div>
+        </div>
+        <div class='col-sm-4'>
+            <div class='form-group'>
+                <select name="conditions" class="form-control">
+                    <option value="contains">Содержит [ like ]</option>
+                    <option value="notcontains">Не содержит [ not like ]</option>
+                    <option value="matches">Соответствует [ = ]</option>
+                    <option value="notmatch">Не соответствует [ != ]</option>
+                </select>
+            </div>
+        </div>
+        <div class='col-sm-4'>
+            <div class='form-group'>
+                <input class="form-control" id="user_lastname" name="user[lastname]" required="true" size="30"
+                       placeholder="Введите значение" type="text"/>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-sm-12' style="padding-left:40px; padding-bottom: 20px;">
+            <label class="radio">
+                <input type="radio" name="optionsRadios" id="optionsRadios1" value="and" checked="">
+                ВСЕ условия должны выполниться ( И )
+            </label>
+            <label class="radio">
+                <input type="radio" name="optionsRadios" id="optionsRadios2" value="or">
+                ЛЮБОЕ из условий должно выполниться ( ИЛИ )
+            </label>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-sm-12'>
+            <div class='form-group'>
+                <button name="submit_form" id="add_condition" class="btn btn-success pull-left" style="width: 45%;"
+                        onclick="addCondition();return false;">Добавить условие
+                </button>
+                <button name="submit_form" id="submit_form" class="btn btn-info pull-right" style="width: 45%;"
+                        onclick="submitForm();return false;"> Поиск
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+<!-- Latest compiled and minified JavaScript -->
+<script src="http://code.jquery.com/jquery-2.1.1.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script>
+    function addCondition() {
+
+        var scntDiv = $('#p_scents');
+        var i = $('#p_scents').size() + 1;
+
+        var form_group = '<div class="col-sm-4">\n\
+                <div class="form-group">\n\
+                <select class="form-control">\n\
+                <option>Наименование клиента</option>\n\
+        <option>IP-адрес оператора</option>\n\
+        <option>Удаленный IP-адрес</option>\n\
+        <option>Порт</option>\n\
+        <option>URL</option>\n\
+        </select>\n\
+        </div>\n\
+        </div>\n\
+        <div class="col-sm-4">\n\
+                <div class="form-group">\n\
+                <select name="conditions" class="form-control">\n\
+                <option value="contains">Содержит [ like ]</option>\n\
+                <option value="notcontains">Не содержит [ not like ]</option>\n\
+        <option value="matches">Соответствует [ = ]</option>\n\
+                <option value="notmatch">Не соответствует [ != ]</option>\n\
+        </select>\n\
+        </div>\n\
+        </div>\n\
+        <div class="col-sm-4">\n\
+                <div class="form-group">\n\
+                <input class="form-control" id="user_lastname" name="user[lastname]" required="true" size="30" placeholder="Введите значение" type="text"/>\n\
+                </div>\n\
+                </div>';
+
+        $(form_group).appendTo(scntDiv);
+        i++;
+
+        return false;
+    }
+
+    function submitForm() {
+
+        $('#submit_form').append('<span class="glyphicon glyphicon-refresh spin"></span>');
+        $("#p_scents :input").attr("disabled", true);
+        setTimeout(function(){
+            location.reload();
+        }, 10000);
+
+    }
+</script>
+</html>
